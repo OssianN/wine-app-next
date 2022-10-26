@@ -1,0 +1,310 @@
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100vh;
+  background-color: #fcfcfc;
+  font-weight: 100;
+}
+
+.App,
+.dashboard {
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  font-family: Raleway, sans-serif;
+}
+
+input,
+button {
+  outline: none;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.header {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2.5rem;
+  color: #550000;
+  padding: 80px 0;
+  margin: 0 auto;
+  margin-top: 80px;
+  top: 0;
+  width: 90vw;
+  background-color: transparent;
+  text-align: center;
+}
+
+.doNotDisplay {
+  display: none;
+}
+
+.wineModal {
+  top: 0;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 200;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100vh;
+  background-color: #00000075;
+}
+
+.wineForm {
+  height: 60%;
+  max-height: 545px;
+  width: 90vw;
+  max-width: 600px;
+  min-width: 320px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px gray;
+  border-radius: 20px;
+  z-index: 200;
+  background-color: #ffffff;
+  overflow: hidden;
+  animation: wineModal 1s;
+}
+
+@keyframes wineModal {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.save-form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+  height: 30px;
+}
+
+.save-form__checkbox {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border-radius: 50%;
+}
+
+.save-form__checkbox.true {
+  background-color: #00b386;
+  border-color: #00b386;
+}
+
+.hideWineForm {
+  position: relative;
+  margin: 0;
+  width: 50%;
+  height: 0px;
+  padding-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-self: center;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px gray;
+  border-radius: 20px;
+  overflow: hidden;
+  opacity: 0;
+  animation: hideWineForm 1s;
+}
+
+@keyframes hideWineForm {
+  from {
+    height: 350px;
+    opacity: 1;
+    margin: 2% 0 5% 0;
+    padding-bottom: 50px;
+  }
+  to {
+    height: 0px;
+    opacity: 0;
+    margin: 0;
+    padding-bottom: 0;
+  }
+}
+
+form input,
+form textarea,
+form button {
+  width: 50%;
+  border-radius: 20px;
+  margin: 10px;
+  height: 35px;
+}
+
+form input {
+  padding: 0 10px;
+  border: solid 1px grey;
+}
+
+form textarea {
+  padding: 10px;
+  font-family: Montserrat, sans-serif;
+  font-weight: 700;
+  outline: none;
+  font-size: 0.9rem;
+  height: 100px;
+  resize: none;
+}
+
+.btn--enforced {
+  background-color: black;
+  border: none;
+  border-radius: 100px;
+  font-size: 1rem;
+  text-transform: capitalize;
+  color: white;
+}
+
+.btn--enforced:hover {
+  box-shadow: 0 0 4px #cccccc;
+}
+
+.btn--form-submit {
+  margin-top: 20px;
+  width: 155px;
+  min-height: 40px;
+  text-transform: capitalize;
+  border: 1px solid black;
+}
+
+.btn--form-archive {
+  background-color: white;
+  border: 1px solid black;
+  color: black;
+  width: 155px;
+  min-height: 40px;
+  text-transform: capitalize;
+}
+
+.archive-button-container {
+  width: 50%;
+  grid-template-areas:
+    'a a'
+    'b c';
+  justify-content: center;
+}
+
+.confirm-archive__p {
+  justify-self: center;
+  grid-area: a;
+  height: 50px;
+  margin-bottom: 10px;
+  margin-top: 40px;
+}
+
+.btn-archive--yes {
+  justify-self: flex-end;
+  height: 50px;
+  width: 100px;
+  grid-area: b;
+  text-transform: capitalize;
+}
+
+.btn-archive--no {
+  height: 50px;
+  width: 100px;
+  justify-self: flex-start;
+  grid-area: c;
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.cancelButton {
+  width: 30px;
+  height: 30px;
+  align-self: flex-end;
+  background-color: transparent;
+  color: #550000;
+  font-size: 1.5rem;
+  border: none;
+}
+
+.logout-container {
+  display: flex;
+  align-items: right;
+  top: 20px;
+  left: 20px;
+  height: 70px;
+  position: absolute;
+  top: 0;
+  left: 15px;
+}
+
+.logout-button {
+  border: none;
+  background-color: transparent;
+  color: #535353;
+}
+
+.account-name-header {
+  color: black;
+  font-weight: bold;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.landing-page {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-page-link-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.landing-page__link {
+  width: 250px;
+  border: 1px solid black;
+  border-radius: 100px;
+  margin-top: 40px;
+  padding: 1rem;
+  text-decoration: none;
+  color: black;
+  background: white;
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.2rem;
+  font-weight: 900;
+}
+
+.landing-page__link--colored {
+  background-color: #7c0000;
+  color: white;
+}
+
+@media (min-height: 620px) {
+  .wineForm {
+    max-height: 600px;
+  }
+
+  .btn--form-submit {
+    margin-top: 40px;
+    min-height: 50px;
+  }
+
+  .btn--form-archive {
+    min-height: 50px;
+  }
+}

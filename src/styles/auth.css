@@ -1,0 +1,27 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 500px;
+  margin: auto;
+  margin-top: 50px;
+  align-items: center;
+}
+
+.auth-form__input {
+  margin: 20px 0;
+  text-transform: lowercase;
+}
+
+.auth-form__submit-button {
+  width: 150px;
+  height: 50px;
+  border-radius: 100px;
+  margin-top: 50px;
+}
+
+.form__error-p {
+  color: #920000;
+  font-size: 0.9rem;
+  margin: 5px;
+}

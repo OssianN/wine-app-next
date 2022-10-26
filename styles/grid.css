@@ -1,0 +1,182 @@
+.wine-grid {
+  position: absolute;
+  width: 100vw;
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: transparent;
+  overflow: scroll;
+}
+
+.wine-row {
+  display: flex;
+  padding: 0 30px;
+}
+
+.flat-button--border {
+  outline: none;
+  cursor: pointer;
+  border: 1px solid black;
+  background: white;
+  border-radius: 100px;
+}
+
+.card,
+.add-wine__div {
+  position: relative;
+  border-radius: 8px;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin: 5px;
+  max-width: 150px;
+  min-width: 100px;
+  flex-grow: 1;
+  color: #550000;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 0 7px #eeeeee;
+  animation-name: card;
+  animation-duration: 1s;
+}
+
+.add-wine__div {
+  min-height: 200px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.card__separaion-span {
+  display: block;
+  height: 1px;
+  border-radius: 10px;
+  width: 70%;
+  margin: 0 auto;
+  background-color: #a0a0a0;
+}
+
+.add-wine__div:hover {
+  background: linear-gradient(#dfdfdf, #d3d3d3);
+}
+
+@keyframes card {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.card__img {
+  height: 170px;
+  object-fit: contain;
+}
+
+.edit-card__button {
+  background: transparent;
+  border: none;
+  margin: 0;
+  font-size: 1.3rem;
+  transform: rotate(90deg);
+}
+
+.add-wine__div button {
+  height: 100%;
+  width: 100%;
+  margin-top: -40px;
+  font-size: 2rem;
+  z-index: 10;
+  background-color: transparent;
+  border: none;
+  color: #dfdfdf;
+}
+
+.card-header {
+  font-weight: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  word-wrap: break-word;
+  width: 100%;
+  height: 20px;
+  margin-bottom: 20px;
+  top: 0;
+}
+
+.card__text-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+}
+
+.card__vivino-url {
+  text-decoration: none;
+  color: #707070;
+}
+
+.card__comment {
+  color: #707070;
+  font-size: 0.9rem;
+}
+
+.card__footer {
+  margin: 20px 0;
+  height: 150px;
+}
+
+.card-header__position--dark {
+  color: #707070;
+}
+
+.card-header__position {
+  color: #707070;
+}
+
+.card__title {
+  width: 100%;
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  flex-wrap: wrap;
+  word-wrap: break-word;
+  color: #6f6f6f;
+}
+
+.card__country-paragraph {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin: 5px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.card__info-paragraph {
+  margin: 20px 10px;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.removeButton:hover {
+  color: #fff;
+}
+
+.archived__container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1em;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .wine-row {
+    justify-content: center;
+  }
+}
