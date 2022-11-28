@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose
+import { Schema, model, models } from 'mongoose'
 
 const wineSchema = new Schema({
   title: { type: String },
@@ -15,6 +14,6 @@ const wineSchema = new Schema({
   vivinoUrl: { type: String },
 })
 
-const WineDataBase = mongoose.model('wines', wineSchema)
+const WineDataBase = models.wines || model('wines', wineSchema)
 
-module.exports = WineDataBase
+export default WineDataBase

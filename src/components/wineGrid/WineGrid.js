@@ -3,24 +3,30 @@ import Card from '../card/Card.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPickedWine } from '../../actions/setPickedWine'
 
-const WineGrid = props => {
+const WineGrid = ({
+  user,
+  searchValue,
+  searchArr,
+  setShowEditModal,
+  setShowAddModal,
+}) => {
   const dispatch = useDispatch()
   const wines = useSelector(state => state.wineArr)
   const wineArr = wines.filter(wine => !wine.archived)
   const pickedWine = useSelector(state => state.pickedWine)
-  const { user } = useSelector(state => state.auth)
-  const cardArr = props.searchValue ? props.searchArr : wineArr
+  const cardArr = searchValue ? searchArr : wineArr
   const cardWidth = 100 / user.columns
 
   const createButton = (i, j) => {
     return (
       <div
         key={`${i}:${j}`}
-        className='add-wine__div'
+        className="add-wine__div"
         id={`${i}:${j}`}
-        style={{ width: `calc(${cardWidth}% - 20px)` }}>
-        <div className='card-header'>
-          <p className='card-header__position--dark'>{`${i + 1}:${j + 1}`}</p>
+        style={{ width: `calc(${cardWidth}% - 20px)` }}
+      >
+        <div className="card-header">
+          <p className="card-header__position--dark">{`${i + 1}:${j + 1}`}</p>
         </div>
         <button onClick={handleClick}>&#43;</button>
       </div>
@@ -33,7 +39,7 @@ const WineGrid = props => {
         key={card._id}
         card={card}
         cardWidth={cardWidth}
-        setShowEditModal={props.setShowEditModal}
+        setShowEditModal={setShowEditModal}
       />
     )
   }
@@ -46,11 +52,12 @@ const WineGrid = props => {
         target.push(createCard(card))
       }
     })
-    if (!check && !props.searchValue) return target.push(createButton(i, j))
+    if (!check && !searchValue) return target.push(createButton(i, j))
   }
 
   const renderCards = cardArr => {
     const shelves = []
+
     for (let i = 0; i < user.shelves; i++) {
       const columns = []
       for (let j = 0; j < user.columns; j++) {
@@ -60,7 +67,7 @@ const WineGrid = props => {
     }
     return shelves.map((shelf, i) => {
       return (
-        <div className='wine-row' key={i}>
+        <div className="wine-row" key={i}>
           {shelf}
         </div>
       )
@@ -76,13 +83,13 @@ const WineGrid = props => {
   }
 
   const handleClick = e => {
-    props.setShowAddModal({ display: 'flex' })
+    setShowAddModal({ display: 'flex' })
     dispatch(
       setPickedWine({ ...pickedWine, ...breakOutXY(e.target.parentElement.id) })
     )
   }
 
-  return <div className='wine-grid'>{renderCards(cardArr)}</div>
+  return <div className="wine-grid">{renderCards(cardArr)}</div>
 }
 
 export default WineGrid

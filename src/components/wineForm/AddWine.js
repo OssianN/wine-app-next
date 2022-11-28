@@ -17,11 +17,10 @@ const AddWine = props => {
       )
       const newWine = await axios.post('/wines', data)
       dispatch(setWineArr([...wineArr, newWine.data]))
-      const updateUser = await axios.post('/users/addWine', {
+      await axios.post('/users/addWine', {
         _id: newWine.data._id,
         email: user.email,
       })
-      const { token } = updateUser.data
     } catch (err) {
       alert('A server error occured:', err.message)
     }

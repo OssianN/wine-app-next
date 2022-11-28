@@ -1,12 +1,15 @@
-import { withIronSessionApiRoute } from 'iron-session/next'
 import bcrypt from 'bcryptjs'
-import { sessionOptions } from '../../lib/session'
+import { withSessionAPI } from '../../lib/session'
 import validateLoginInput from '../../validation/login'
-import dbConnect from '../../mongoDB'
+import connectMongo from '../../mongoDB'
 import UserDataBase from '../../mongoDB/user-schema'
 
-async function loginRoute(req, res) {
+const loginRoute = async (req, res) => {
   try {
+    if (req.session?.user) {
+      res.status(200).send(req.session.user)
+    }
+
     const { email, password } = await req.body
     const { errors, isValid } = validateLoginInput(req.body)
 
@@ -15,27 +18,31 @@ async function loginRoute(req, res) {
       return
     }
 
-    await dbConnect()
+    await connectMongo()
+    console.log('connected to MongoDB')
 
-    UserDataBase.findOne({ email }).then(user => {
-      console.log(user)
-      if (!user) {
-        res.status(404).json({ emailnotfound: 'Email not found' })
-        return
-      }
-      bcrypt.compare(password, user.password).then(isMatch => {
-        if (!isMatch) {
-          res.status(400).json({ passwordincorrect: 'Password incorrect' })
-          return
-        }
+    const user = await UserDataBase.findOne({ email })
 
-        const userData = { isLoggedIn: true, user }
-        res.status(200).json(userData)
-      })
-    })
+    if (!user) {
+      res.status(404).json({ emailnotfound: 'Email not found' })
+      return
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+      res.status(400).json({ passwordincorrect: 'Password incorrect' })
+      return
+    }
+
+    const userData = { isLoggedIn: true, user }
+    req.session.user = userData
+    await req.session.save()
+
+    res.status(200).send(userData)
   } catch (error) {
     res.status(500).json({ message: error.message })
   }
 }
 
-export default withIronSessionApiRoute(loginRoute, sessionOptions)
+export default withSessionAPI(loginRoute)

@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import React, { useRef } from 'react'
 import { images } from '../../images'
 
@@ -25,16 +26,12 @@ const ArchiveButton = ({ setShowArchived }) => {
       onClick={handleShowArchived}
       ref={ref}
     >
-      <img
-        className="archive__button-img archive__button-img--wine"
-        src={images.wine}
-        alt="wines"
-      />
-      <img
-        className="archive__button-img archive__button-img--archive"
-        src={images.archive}
-        alt="archived"
-      />
+      <div className="archive__button-img archive__button-img--wine">
+        <Image src={images.wine} alt="wines" />
+      </div>
+      <div className="archive__button-img archive__button-img--archive">
+        <Image src={images.archive} alt="archived" />
+      </div>
     </button>
   )
 }

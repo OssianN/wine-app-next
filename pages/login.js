@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import useUser from '../lib/useUser'
-import fetchJson from '../lib/fetchJson'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -8,10 +8,7 @@ const Login = () => {
     password: '',
   })
   const [errorMsg, setErrorMsg] = useState('')
-  const { mutateUser } = useUser({
-    redirectTo: '/dashboard',
-    redirectIfFound: true,
-  })
+  const router = useRouter()
 
   const handleChange = e => {
     const name = e.target.name
@@ -24,13 +21,8 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      mutateUser(
-        await fetchJson('/api/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(inputValue),
-        })
-      )
+      await axios.post('/api/login', inputValue)
+      router.push('/dashboard')
     } catch (error) {
       if (error) {
         setErrorMsg(error.message)

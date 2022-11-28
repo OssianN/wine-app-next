@@ -1,4 +1,4 @@
-const WineDataBase = require('../../mongoDB/wine-schema')
+import WineDataBase from '../../../mongoDB/wine-schema'
 
 const handler = async (req, res) => {
   try {

@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-const InitialSetup = ({ setShowSettings }) => {
-  const { user } = useSelector(state => state.auth)
+const InitialSetup = ({ user, setShowSettings }) => {
   const [inputValue, setInputValue] = useState({
-    columns: user.columns,
-    shelves: user.shelves,
+    columns: user?.columns,
+    shelves: user?.shelves,
   })
   const [error, setError] = useState(false)
 
@@ -41,7 +39,7 @@ const InitialSetup = ({ setShowSettings }) => {
           name="columns"
           className="initial-setup__input"
           type="number"
-          placeholder={user.columns}
+          placeholder={user?.columns}
           value={inputValue.column}
           onChange={handleChange}
         ></input>
@@ -50,7 +48,7 @@ const InitialSetup = ({ setShowSettings }) => {
           name="shelves"
           className="initial-setup__input"
           type="number"
-          placeholder={user.shelves}
+          placeholder={user?.shelves}
           value={inputValue.shelf}
           onChange={handleChange}
         ></input>
