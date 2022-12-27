@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import axios from 'axios'
 import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { loginUser } from '../src/actions/authActions'
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -8,6 +9,7 @@ const Login = () => {
     password: '',
   })
   const [errorMsg, setErrorMsg] = useState('')
+  const dispatch = useDispatch()
   const router = useRouter()
 
   const handleChange = e => {
@@ -21,7 +23,7 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
-      await axios.post('/api/login', inputValue)
+      dispatch(loginUser(inputValue))
       router.push('/dashboard')
     } catch (error) {
       if (error) {

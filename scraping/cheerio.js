@@ -1,6 +1,6 @@
 import cheerio from 'cheerio'
-import fetch from 'node-fetch'
-import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+// import fetch from 'node-fetch'
+// import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 
 // const getPuppeteerPage = ( title, year ) => {
 //   const url = `https://www.vivino.com/search/wines?q=${title}+${year}`;

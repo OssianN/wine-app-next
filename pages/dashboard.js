@@ -6,13 +6,13 @@ import Search from '../src/components/header/Search'
 import { useDispatch } from 'react-redux'
 import { withSessionSSR } from '../lib/session'
 import { setWineArr } from '../src/actions/wineActions'
+import { setCurrentUser } from '../src/actions/authActions'
 import Settings from '../src/components/header/Settings'
 import InitialSetup from '../src/components/header/InitialSetup'
 import Hamburger from '../src/components/header/Hamburger'
 import ArchivedWines from '../src/components/wineGrid/ArchivedWines'
 import ArchiveButton from '../src/components/header/ArchiveButton'
 import axios from 'axios'
-import { sessionOptions } from '../lib/session'
 
 const Dashboard = ({ user }) => {
   const [updateOnPost, setUpdateOnPost] = useState(0)
@@ -42,12 +42,16 @@ const Dashboard = ({ user }) => {
     getWines()
   }, [dispatch, user])
 
+  useEffect(() => {
+    dispatch(setCurrentUser(user))
+  })
+
   if (!user) {
     return null
   }
 
   if (!user.columns || !user.shelves) {
-    return <InitialSetup user={user} setShowSettings={setShowSettings} />
+    return <InitialSetup setShowSettings={setShowSettings} />
   }
 
   return (
@@ -111,13 +115,13 @@ export const getServerSideProps = withSessionSSR(async ({ req }) => {
   if (!user) {
     return {
       redirect: {
-        destination: '/login',
+        destination: '/',
         permanent: false,
       },
     }
   }
 
   return {
-    props: { user: user?.user },
+    props: { user: user ?? null },
   }
-}, sessionOptions)
+})

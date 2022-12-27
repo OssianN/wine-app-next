@@ -73,6 +73,7 @@
 }
 
 .card__img {
+  position: relative;
   height: 170px;
   object-fit: contain;
 }

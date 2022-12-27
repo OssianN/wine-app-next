@@ -1,11 +1,18 @@
 import React, { useState } from 'react'
+import useUser from '../../../hooks/useUser'
+import axios from 'axios'
+import { setCurrentUser } from '../../actions/authActions'
+import { useDispatch } from 'react-redux'
 
-const InitialSetup = ({ user, setShowSettings }) => {
+const InitialSetup = ({ setShowSettings }) => {
+  const { user } = useUser()
   const [inputValue, setInputValue] = useState({
     columns: user?.columns,
     shelves: user?.shelves,
   })
   const [error, setError] = useState(false)
+
+  const dispatch = useDispatch()
 
   const handleChange = e => {
     const { name } = e.target
@@ -21,11 +28,12 @@ const InitialSetup = ({ user, setShowSettings }) => {
       setError(true)
     } else {
       setError(false)
-      const updatedUser = await axios.post('/users/addStorage', {
+      const updatedUser = await axios.post('api/users/addStorage', {
         columns: inputValue.columns,
         shelves: inputValue.shelves,
         email: user.email,
       })
+      dispatch(setCurrentUser(updatedUser))
       setShowSettings(false)
     }
   }

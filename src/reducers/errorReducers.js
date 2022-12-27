@@ -1,14 +1,14 @@
-import { GET_ERRORS } from "../actions/types";
+import { GET_ERRORS } from '../actions/types'
 
-const initialState = {};
+const initialState = ''
 
 const errorReducers = (state = initialState, action) => {
   switch (action.type) {
     case GET_ERRORS:
-      return action.payload;
+      return action.payload
     default:
-      return state;
+      return state
   }
 }
 
-export default errorReducers;
+export default errorReducers

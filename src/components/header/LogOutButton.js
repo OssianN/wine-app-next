@@ -1,13 +1,15 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../actions/authActions'
+import { useRouter } from 'next/router'
 
 const LogOutButton = () => {
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const handleLogOut = () => {
-    dispatch(setCurrentUser({}))
-    localStorage.removeItem('jwtToken')
-    history.push('/')
+    dispatch(logoutUser())
+    router.push('/')
   }
 
   return (

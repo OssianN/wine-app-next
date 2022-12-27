@@ -19,7 +19,7 @@ input,
 button {
   outline: none;
   font-family: Montserrat, sans-serif;
-  font-weight: 700;
+  font-weight: 500;
   text-transform: capitalize;
 }
 
@@ -31,7 +31,6 @@ button {
   margin: 0 auto;
   margin-top: 80px;
   top: 0;
-  width: 90vw;
   background-color: transparent;
 }
 
@@ -263,6 +262,7 @@ form textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .landing-page-link-container {
@@ -274,14 +274,15 @@ form textarea {
 
 .landing-page__link {
   width: 250px;
-  height: 40px;
-  padding-top: 20px;
-  border: 1px solid black;
+  height: 60px;
+  padding: 1rem;
+  border: 2px solid #7c0000;
   border-radius: 100px;
   margin-top: 40px;
   text-decoration: none;
-  font-weight: 400;
-  color: black;
+  font-size: 1.1rem;
+  color: #7c0000;
+  background: white;
 }
 
 .landing-page__link--colored {

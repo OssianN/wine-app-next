@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
+import { registerUser } from '../src/actions/authActions'
 
 const Register = () => {
   const [inputValue, setInputValue] = useState({
@@ -11,6 +13,7 @@ const Register = () => {
   const auth = useSelector(state => state.auth.isAuthenticated)
   const authError = useSelector(state => state.errorState)
   const dispatch = useDispatch()
+  const router = useRouter()
 
   const handleChange = e => {
     const name = e.target.name
@@ -22,12 +25,12 @@ const Register = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    dispatch(registerUser(inputValue, history))
+    dispatch(registerUser(inputValue))
   }
 
   useEffect(() => {
     if (auth) {
-      history.push('/dashboard')
+      router.push('/dashboard')
     }
   })
 

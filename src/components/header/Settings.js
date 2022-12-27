@@ -3,12 +3,13 @@ import LogOutButton from './LogOutButton'
 import InitialSetup from './InitialSetup'
 import { useSelector } from 'react-redux'
 
-const Settings = ({ user, showSettings, setShowSettings, setShowArchived }) => {
+const Settings = ({ showSettings, setShowSettings, setShowArchived }) => {
+  const { user } = useSelector(state => state.auth)
+  const wineArr = useSelector(state => state.wineArr).filter(
+    wine => !wine.archived
+  )
   const [totalPrice, setTotalPrice] = useState(0)
-  const wines = useSelector(state => state.wineArr)
   const leftMargin = showSettings ? null : '-400px'
-
-  const wineArr = wines.filter(wine => !wine.archived)
 
   const extractPrice = wine => {
     if (!wine.price || isNaN(wine.price)) {
@@ -22,7 +23,7 @@ const Settings = ({ user, showSettings, setShowSettings, setShowArchived }) => {
   useEffect(() => {
     const totalPrice = wineArr.map(extractPrice).reduce(priceReducer, 0)
     setTotalPrice(totalPrice)
-  }, [wineArr, wines])
+  }, [wineArr])
 
   return (
     <div className="settings-container" style={{ right: leftMargin }}>
@@ -34,7 +35,7 @@ const Settings = ({ user, showSettings, setShowSettings, setShowArchived }) => {
         </h4>
         <p className="settings__price-p">{totalPrice} kr</p>
       </div>
-      <InitialSetup user={user} setShowSettings={setShowSettings} />
+      <InitialSetup setShowSettings={setShowSettings} />
     </div>
   )
 }

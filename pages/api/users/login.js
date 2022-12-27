@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
-import { withSessionAPI } from '../../lib/session'
-import validateLoginInput from '../../validation/login'
-import connectMongo from '../../mongoDB'
-import UserDataBase from '../../mongoDB/user-schema'
+import { withSessionAPI } from '../../../lib/session'
+import validateLoginInput from '../../../validation/login'
+import connectMongo from '../../../mongoDB'
+import UserDataBase from '../../../mongoDB/user-schema'
 
 const loginRoute = async (req, res) => {
   try {
@@ -19,7 +19,6 @@ const loginRoute = async (req, res) => {
     }
 
     await connectMongo()
-    console.log('connected to MongoDB')
 
     const user = await UserDataBase.findOne({ email })
 
@@ -35,13 +34,15 @@ const loginRoute = async (req, res) => {
       return
     }
 
-    const userData = { isLoggedIn: true, user }
-    req.session.user = userData
+    req.session.user = user
     await req.session.save()
 
-    res.status(200).send(userData)
-  } catch (error) {
-    res.status(500).json({ message: error.message })
+    console.log(req.session)
+
+    res.status(200).json(user)
+  } catch (err) {
+    console.log(err, 'users / login')
+    res.status(500).json({ message: err.message })
   }
 }
 

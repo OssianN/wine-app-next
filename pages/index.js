@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { withSessionSSR } from '../lib/session'
 
 const App = () => {
   return (
@@ -20,3 +21,19 @@ const App = () => {
 }
 
 export default App
+
+export const getServerSideProps = withSessionSSR(async ({ req }) => {
+  const { user } = req.session
+  console.log(user)
+
+  if (user) {
+    return {
+      redirect: {
+        destination: '/dashboard',
+        permanent: false,
+      },
+    }
+  }
+
+  return { props: { user: null } }
+})

@@ -1,10 +1,16 @@
 import WineDataBase from '../../../mongoDB/wine-schema'
-import { getVivinoData } from '../scraping/cheerio'
+import { withSessionAPI } from '../../../lib/session'
+import getVivinoData from '../../../scraping/cheerio'
+import connectMongo from '../../../mongoDB'
 
 const handler = async (req, res) => {
   try {
-    const { title, year, price, comment, archived, _id } = data
+    const { body } = req
+    const { title, year, price, comment, archived, _id } = body
     const [img, rating, country, vivinoUrl] = await getVivinoData(title, year)
+
+    await connectMongo()
+
     const response = await WineDataBase.findOneAndUpdate(
       {
         _id,
@@ -27,8 +33,9 @@ const handler = async (req, res) => {
 
     res.status(200).json(response)
   } catch (err) {
+    console.error(err, 'wines / update wine')
     res.status(500).send()
   }
 }
 
-export default handler
+export default withSessionAPI(handler)
