@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import { withSessionAPI } from '../../../lib/session'
 import validateLoginInput from '../../../validation/login'
 import connectMongo from '../../../mongoDB'
 import UserDataBase from '../../../mongoDB/user-schema'
@@ -33,6 +34,7 @@ const loginRoute = async (req, res) => {
       return
     }
 
+    console.log(req.session)
     req.session.user = user
     await req.session.save()
 
@@ -43,4 +45,4 @@ const loginRoute = async (req, res) => {
   }
 }
 
-export default loginRoute
+export default withSessionAPI(loginRoute)

@@ -12,8 +12,12 @@ export const registerUser = userData => async dispatch => {
 
 export const loginUser = userData => async dispatch => {
   try {
-    await axios.post('/api/users/login', userData)
+    const res = await axios.post('/api/users/login', userData)
     dispatch(setLoginError({}))
+
+    if (res.statusCode !== 200) {
+      throw new Error(res)
+    }
   } catch (err) {
     dispatch(setLoginError(err?.response?.data ?? err))
   }
