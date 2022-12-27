@@ -2,6 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginUser } from '../src/actions/authActions'
+import useUser from '../hooks/useUser'
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -9,8 +10,10 @@ const Login = () => {
     password: '',
   })
   const [errorMsg, setErrorMsg] = useState('')
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
+  const { user, mutateUser } = useUser()
 
   const handleChange = e => {
     const name = e.target.name
@@ -23,8 +26,10 @@ const Login = () => {
   const handleSubmit = async e => {
     e.preventDefault()
     try {
+      setLoading(true)
       dispatch(loginUser(inputValue))
-      router.push('/dashboard')
+      await mutateUser()
+      setLoading(false)
     } catch (error) {
       if (error) {
         setErrorMsg(error.message)
@@ -34,8 +39,13 @@ const Login = () => {
     }
   }
 
+  if (user) {
+    router.push('/dashboard')
+    return null
+  }
+
   return (
-    <>
+    <div className="dashboard">
       <h1 className="header">This is the wine we whine about</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         {errorMsg.email ? (
@@ -68,10 +78,10 @@ const Login = () => {
           className="auth-form__submit-button btn--enforced"
           type="submit"
         >
-          log in
+          {loading ? 'logging in...' : 'log in'}
         </button>
       </form>
-    </>
+    </div>
   )
 }
 

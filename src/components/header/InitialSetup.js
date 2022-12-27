@@ -1,24 +1,21 @@
 import React, { useState } from 'react'
 import useUser from '../../../hooks/useUser'
 import axios from 'axios'
-import { setCurrentUser } from '../../actions/authActions'
-import { useDispatch } from 'react-redux'
 
 const InitialSetup = ({ setShowSettings }) => {
-  const { user } = useUser()
+  const { user, mutateUser } = useUser()
   const [inputValue, setInputValue] = useState({
     columns: user?.columns,
     shelves: user?.shelves,
   })
   const [error, setError] = useState(false)
-
-  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(false)
 
   const handleChange = e => {
-    const { name } = e.target
+    const { name, value } = e.target
     setInputValue({
       ...inputValue,
-      [name]: e.target.value,
+      [name]: value,
     })
   }
 
@@ -28,12 +25,14 @@ const InitialSetup = ({ setShowSettings }) => {
       setError(true)
     } else {
       setError(false)
-      const updatedUser = await axios.post('api/users/addStorage', {
+      setLoading(true)
+      await axios.post('api/users/addStorage', {
         columns: inputValue.columns,
         shelves: inputValue.shelves,
         email: user.email,
       })
-      dispatch(setCurrentUser(updatedUser))
+      await mutateUser()
+      setLoading(false)
       setShowSettings(false)
     }
   }
@@ -46,18 +45,16 @@ const InitialSetup = ({ setShowSettings }) => {
         <input
           name="columns"
           className="initial-setup__input"
-          type="number"
           placeholder={user?.columns}
-          value={inputValue.column}
+          value={inputValue.columns}
           onChange={handleChange}
         ></input>
         <label>How many shelves do you have?</label>
         <input
           name="shelves"
           className="initial-setup__input"
-          type="number"
           placeholder={user?.shelves}
-          value={inputValue.shelf}
+          value={inputValue.shelves}
           onChange={handleChange}
         ></input>
         <p className="initial-setup__p">
@@ -67,7 +64,7 @@ const InitialSetup = ({ setShowSettings }) => {
           type="submit"
           className="initial-setup__button--confirm btn--enforced"
         >
-          confirm
+          {loading ? 'changing...' : 'confirm'}
         </button>
       </form>
     </div>

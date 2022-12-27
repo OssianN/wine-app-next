@@ -1,29 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import LogOutButton from './LogOutButton'
 import InitialSetup from './InitialSetup'
 import { useSelector } from 'react-redux'
+import useUser from '../../../hooks/useUser'
 
-const Settings = ({ showSettings, setShowSettings, setShowArchived }) => {
-  const { user } = useSelector(state => state.auth)
+const extractPrice = wine => {
+  if (!wine.price || isNaN(wine.price)) {
+    return 0
+  }
+  return parseInt(wine.price)
+}
+
+const priceReducer = (acc, curr) => acc + parseInt(curr)
+
+const Settings = ({ showSettings, setShowSettings }) => {
+  const { user } = useUser()
   const wineArr = useSelector(state => state.wineArr).filter(
     wine => !wine.archived
   )
-  const [totalPrice, setTotalPrice] = useState(0)
+  const totalPrice = useMemo(
+    () => wineArr.map(extractPrice).reduce(priceReducer, 0),
+    [wineArr]
+  )
+
   const leftMargin = showSettings ? null : '-400px'
 
-  const extractPrice = wine => {
-    if (!wine.price || isNaN(wine.price)) {
-      return 0
-    }
-    return parseInt(wine.price)
-  }
-
-  const priceReducer = (acc, curr) => acc + parseInt(curr)
-
-  useEffect(() => {
-    const totalPrice = wineArr.map(extractPrice).reduce(priceReducer, 0)
-    setTotalPrice(totalPrice)
-  }, [wineArr])
+  if (!user) return null
 
   return (
     <div className="settings-container" style={{ right: leftMargin }}>

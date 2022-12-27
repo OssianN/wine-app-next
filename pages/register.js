@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import { registerUser } from '../src/actions/authActions'
+import { registerUser, setLoginError } from '../src/actions/authActions'
+import validateRegisterInput from '../validation/register'
+import useUser from '../hooks/useUser'
 
 const Register = () => {
+  const { user } = useUser
   const [inputValue, setInputValue] = useState({
     name: '',
     email: '',
     password: '',
     password2: '',
   })
-  const auth = useSelector(state => state.auth.isAuthenticated)
   const authError = useSelector(state => state.errorState)
   const dispatch = useDispatch()
   const router = useRouter()
@@ -25,17 +27,24 @@ const Register = () => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    const { isValid, errors } = validateRegisterInput(inputValue)
+
+    if (!isValid) {
+      dispatch(setLoginError(errors))
+      return
+    }
     dispatch(registerUser(inputValue))
+    router.push('/login')
   }
 
   useEffect(() => {
-    if (auth) {
+    if (user) {
       router.push('/dashboard')
     }
   })
 
   return (
-    <>
+    <div className="dashboard">
       <h1 className="header">This is the wine we whine about</h1>
       <form onSubmit={handleSubmit} className="auth-form">
         <input
@@ -90,7 +99,7 @@ const Register = () => {
           register
         </button>
       </form>
-    </>
+    </div>
   )
 }
 

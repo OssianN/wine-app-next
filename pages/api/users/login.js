@@ -37,8 +37,6 @@ const loginRoute = async (req, res) => {
     req.session.user = user
     await req.session.save()
 
-    console.log(req.session)
-
     res.status(200).json(user)
   } catch (err) {
     console.log(err, 'users / login')

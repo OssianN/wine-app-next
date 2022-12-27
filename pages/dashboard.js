@@ -6,15 +6,15 @@ import Search from '../src/components/header/Search'
 import { useDispatch } from 'react-redux'
 import { withSessionSSR } from '../lib/session'
 import { setWineArr } from '../src/actions/wineActions'
-import { setCurrentUser } from '../src/actions/authActions'
 import Settings from '../src/components/header/Settings'
 import InitialSetup from '../src/components/header/InitialSetup'
 import Hamburger from '../src/components/header/Hamburger'
 import ArchivedWines from '../src/components/wineGrid/ArchivedWines'
 import ArchiveButton from '../src/components/header/ArchiveButton'
 import axios from 'axios'
+import useUser from '../hooks/useUser'
 
-const Dashboard = ({ user }) => {
+const Dashboard = ({ initialUserData }) => {
   const [updateOnPost, setUpdateOnPost] = useState(0)
   const [showAddModal, setShowAddModal] = useState({ display: 'none' })
   const [showEditModal, setShowEditModal] = useState({ display: 'none' })
@@ -22,8 +22,10 @@ const Dashboard = ({ user }) => {
   const [searchValue, setSearchValue] = useState('')
   const [showSettings, setShowSettings] = useState(false)
   const [showArchived, setShowArchived] = useState(false)
+  const [loading, setIsLoading] = useState(false)
 
   const dispatch = useDispatch()
+  const { user } = useUser(initialUserData)
 
   useEffect(() => {
     if (!user) return
@@ -39,12 +41,10 @@ const Dashboard = ({ user }) => {
         console.error(err, 'getWines error')
       }
     }
+    setIsLoading(true)
     getWines()
+    setIsLoading(false)
   }, [dispatch, user])
-
-  useEffect(() => {
-    dispatch(setCurrentUser(user))
-  })
 
   if (!user) {
     return null
@@ -52,6 +52,10 @@ const Dashboard = ({ user }) => {
 
   if (!user.columns || !user.shelves) {
     return <InitialSetup setShowSettings={setShowSettings} />
+  }
+
+  if (loading) {
+    return <p>loading...</p>
   }
 
   return (
@@ -69,7 +73,6 @@ const Dashboard = ({ user }) => {
           setShowSettings={setShowSettings}
         />
         <Settings
-          user={user}
           showSettings={showSettings}
           setShowSettings={setShowSettings}
           setShowArchived={setShowArchived}
@@ -96,7 +99,6 @@ const Dashboard = ({ user }) => {
         />
       ) : (
         <WineGrid
-          user={user}
           setShowAddModal={setShowAddModal}
           setShowEditModal={setShowEditModal}
           searchArr={searchArr}
@@ -122,6 +124,6 @@ export const getServerSideProps = withSessionSSR(async ({ req }) => {
   }
 
   return {
-    props: { user: user ?? null },
+    props: { initialUserData: user ?? null },
   }
 })

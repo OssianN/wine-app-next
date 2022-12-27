@@ -1,7 +1,6 @@
 import UserDataBase from '../../../mongoDB/user-schema'
 import { withSessionAPI } from '../../../lib/session'
 import connectMongo from '../../../mongoDB'
-import { updateUserSession } from '../../../hooks/updateUserSession'
 
 const handler = async (req, res) => {
   try {
@@ -20,7 +19,7 @@ const handler = async (req, res) => {
     req.session.user = user
     await req.session.save()
 
-    res.status(200).send(payload)
+    res.status(200).send(user)
   } catch (err) {
     console.error(err, 'users / add storage')
     res.status(500).send(err)

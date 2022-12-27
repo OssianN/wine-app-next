@@ -2,20 +2,23 @@ import React from 'react'
 import Card from '../card/Card.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { setPickedWine } from '../../actions/setPickedWine'
+import useUser from '../../../hooks/useUser'
 
 const WineGrid = ({
-  user,
   searchValue,
   searchArr,
   setShowEditModal,
   setShowAddModal,
 }) => {
   const dispatch = useDispatch()
+  const { user } = useUser()
   const wines = useSelector(state => state.wineArr)
   const wineArr = wines.filter(wine => !wine.archived)
   const pickedWine = useSelector(state => state.pickedWine)
   const cardArr = searchValue ? searchArr : wineArr
   const cardWidth = 100 / user.columns
+
+  if (!user) return null
 
   const createButton = (i, j) => {
     return (

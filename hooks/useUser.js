@@ -1,11 +1,12 @@
 import useSwr from 'swr'
 import { fetcher } from '../lib/swrFetcher'
 
-const useUser = () => {
-  const { data } = useSwr('/api/users/getLoggedInUser', fetcher)
-  console.log(data, 'USE USER')
+const useUser = fallbackData => {
+  const { data, mutate } = useSwr('/api/users/getLoggedInUser', fetcher, {
+    fallbackData,
+  })
 
-  return { user: data?.user }
+  return { user: data?.user, mutateUser: mutate }
 }
 
 export default useUser

@@ -24,7 +24,6 @@ export default App
 
 export const getServerSideProps = withSessionSSR(async ({ req }) => {
   const { user } = req.session
-  console.log(user)
 
   if (user) {
     return {

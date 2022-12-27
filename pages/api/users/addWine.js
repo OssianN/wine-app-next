@@ -1,7 +1,6 @@
 import UserDataBase from '../../../mongoDB/user-schema'
 import { withSessionAPI } from '../../../lib/session'
 import connectMongo from '../../../mongoDB'
-// import { updateUserSession } from '../../../hooks/updateUserSession'
 
 const handler = async (req, res) => {
   try {
