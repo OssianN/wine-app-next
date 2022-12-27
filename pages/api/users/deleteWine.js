@@ -17,9 +17,6 @@ const handler = async (req, res) => {
       wineList: newList,
     }
 
-    req.session.user = user
-    await req.session.save()
-
     res.status(202).send()
   } catch (err) {
     console.error(err, 'users / delete wine')

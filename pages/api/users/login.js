@@ -34,8 +34,7 @@ const loginRoute = async (req, res) => {
       return
     }
 
-    console.log(req.session)
-    req.session.user = user
+    req.session.user = user.email
     await req.session.save()
 
     res.status(200).json(user)

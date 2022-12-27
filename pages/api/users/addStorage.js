@@ -16,9 +16,6 @@ const handler = async (req, res) => {
       shelves,
     }
 
-    req.session.user = user
-    await req.session.save()
-
     res.status(200).send(user)
   } catch (err) {
     console.error(err, 'users / add storage')
