@@ -10,6 +10,7 @@
 
 .auth-form__input {
   margin: 20px 0;
+  text-transform: none;
 }
 
 .auth-form__submit-button {

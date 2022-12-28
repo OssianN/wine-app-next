@@ -23,14 +23,14 @@ const loginRoute = async (req, res) => {
     const user = await UserDataBase.findOne({ email: email.toLowerCase() })
 
     if (!user) {
-      res.status(400).json({ emailnotfound: 'Email not found' })
+      res.status(400).send({ message: 'Email not found' })
       return
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
-      res.status(400).json({ passwordincorrect: 'Password incorrect' })
+      res.status(400).send({ message: 'Password incorrect' })
       return
     }
 

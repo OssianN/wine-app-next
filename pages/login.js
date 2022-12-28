@@ -23,17 +23,15 @@ const Login = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      const res = await axios.post('/api/users/login', inputValue)
-
-      console.log(res)
-      if (res.status !== 200) {
-        throw new Error(res.errorMessage)
-      }
+      await axios.post('/api/users/login', inputValue)
 
       router.push('/dashboard')
       setLoading(false)
     } catch (error) {
-      setErrorMsg(error.message)
+      setLoading(false)
+      setErrorMsg(
+        error?.response?.data?.message ?? 'something went wrong, try again...'
+      )
       console.error('An unexpected error happened:', error)
     }
   }
@@ -42,11 +40,7 @@ const Login = () => {
     <div className="dashboard">
       <h1 className="header">This is the wine we whine about</h1>
       <form onSubmit={handleSubmit} className="auth-form">
-        {errorMsg.email ? (
-          <p className="form__error-p">{errorMsg.email}</p>
-        ) : (
-          <p></p>
-        )}
+        {errorMsg && <p className="form__error-p">{errorMsg}</p>}
         <input
           className="auth-form__input"
           onChange={handleChange}
@@ -54,12 +48,8 @@ const Login = () => {
           type="text"
           value={inputValue.email}
           placeholder="email"
+          autocapitalize={false}
         ></input>
-        {errorMsg.password ? (
-          <p className="form__error-p">{errorMsg.password}</p>
-        ) : (
-          <p></p>
-        )}
         <input
           className="auth-form__input"
           onChange={handleChange}
@@ -67,6 +57,7 @@ const Login = () => {
           value={inputValue.password}
           placeholder="password"
           type="password"
+          autocapitalize={false}
         ></input>
         <button
           className="auth-form__submit-button btn--enforced"
