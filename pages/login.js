@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { loginUser } from '../src/actions/authActions'
-import useUser from '../hooks/useUser'
+import axios from 'axios'
+import { setLoginError } from '../src/actions/authActions'
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -13,7 +13,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
-  const { user, mutateUser } = useUser()
 
   const handleChange = e => {
     const name = e.target.name
@@ -27,21 +26,13 @@ const Login = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      dispatch(loginUser(inputValue))
-      await mutateUser()
+      await axios.post('/api/users/login', inputValue)
+      router.push('/dashboard')
       setLoading(false)
     } catch (error) {
-      if (error) {
-        setErrorMsg(error.message)
-      } else {
-        console.error('An unexpected error happened:', error)
-      }
+      setErrorMsg(error.message)
+      console.error('An unexpected error happened:', error)
     }
-  }
-
-  if (user) {
-    router.push('/dashboard')
-    return null
   }
 
   return (
