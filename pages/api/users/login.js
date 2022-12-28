@@ -20,10 +20,10 @@ const loginRoute = async (req, res) => {
 
     await connectMongo()
 
-    const user = await UserDataBase.findOne({ email })
+    const user = await UserDataBase.findOne({ email: email.toLowerCase() })
 
     if (!user) {
-      res.status(404).json({ emailnotfound: 'Email not found' })
+      res.status(400).json({ emailnotfound: 'Email not found' })
       return
     }
 

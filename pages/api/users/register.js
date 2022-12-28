@@ -14,7 +14,9 @@ const handler = async (req, res) => {
 
   await connectMongo()
 
-  const existingUser = await UserDataBase.findOne({ email })
+  const existingUser = await UserDataBase.findOne({
+    email: email.toLowerCase(),
+  })
 
   if (existingUser) {
     res.status(400).json({ email: 'Email already exists' })
@@ -23,7 +25,7 @@ const handler = async (req, res) => {
 
   const newUser = new UserDataBase({
     name,
-    email,
+    email: email.toLowerCase(),
     password,
     wineList: [],
   })

@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { setLoginError } from '../src/actions/authActions'
 
 const Login = () => {
   const [inputValue, setInputValue] = useState({
@@ -11,7 +9,6 @@ const Login = () => {
   })
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
   const router = useRouter()
 
   const handleChange = e => {
@@ -26,7 +23,13 @@ const Login = () => {
     e.preventDefault()
     try {
       setLoading(true)
-      await axios.post('/api/users/login', inputValue)
+      const res = await axios.post('/api/users/login', inputValue)
+
+      console.log(res)
+      if (res.status !== 200) {
+        throw new Error(res.errorMessage)
+      }
+
       router.push('/dashboard')
       setLoading(false)
     } catch (error) {

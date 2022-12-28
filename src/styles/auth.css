@@ -10,7 +10,6 @@
 
 .auth-form__input {
   margin: 20px 0;
-  text-transform: lowercase;
 }
 
 .auth-form__submit-button {
