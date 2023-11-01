@@ -10,11 +10,6 @@ const handler = async (req, res) => {
 
     const user = await UserDataBase.findOne({ email })
     await user.updateOne({ columns, shelves })
-    const payload = {
-      ...user._doc,
-      columns,
-      shelves,
-    }
 
     res.status(200).send(user)
   } catch (err) {

@@ -22,7 +22,7 @@ const handler = async (req, res) => {
 
     wineList.push(_id)
     await user.updateOne({ wineList })
-    
+
     res.status(200).send()
   } catch (err) {
     console.error(err, 'users / add wine')

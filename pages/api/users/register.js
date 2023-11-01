@@ -26,22 +26,14 @@ const handler = async (req, res) => {
   const newUser = new UserDataBase({
     name,
     email: email.toLowerCase(),
-    password,
+    password: await bcrypt.hash(password, 10),
     wineList: [],
   })
 
-  bcrypt.genSalt(10, async (_, salt) => {
-    bcrypt.hash(newUser.password, salt, async (err, hash) => {
-      if (err) throw err
-
-      newUser.password = hash
-
-      await newUser
-        .save()
-        .then(user => res.json(user))
-        .catch(err => console.error(err))
-    })
-  })
+  await newUser
+    .save()
+    .then(user => res.json(user))
+    .catch(err => console.error(err))
 }
 
 export default handler
