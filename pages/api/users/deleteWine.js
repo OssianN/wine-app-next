@@ -12,10 +12,6 @@ const handler = async (req, res) => {
     const wineList = await user.wineList
     const newList = wineList.filter(wine => wine !== _id)
     await user.updateOne({ wineList: newList })
-    const payload = {
-      ...user._doc,
-      wineList: newList,
-    }
 
     res.status(202).send()
   } catch (err) {

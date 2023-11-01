@@ -40,7 +40,7 @@ const Search = ({
       setSearchArr(newArr)
     }
     handleSearch()
-  }, [searchValue, setSearchArr, wines])
+  }, [searchValue, setSearchArr, wineArr, wines])
 
   useEffect(() => {
     const filterRating = () => {
@@ -52,7 +52,7 @@ const Search = ({
       }
     }
     filterRating()
-  }, [searchValue, setSearchArr, wines])
+  }, [searchValue, setSearchArr, wineArr, wines])
 
   useEffect(() => {
     const filterPrice = () => {
@@ -64,16 +64,17 @@ const Search = ({
       }
     }
     filterPrice()
-  }, [searchValue, setSearchArr, wines])
+  }, [searchValue, setSearchArr, wineArr, wines])
 
   return (
     <>
       <input
-        type='text'
+        type="text"
         onChange={handleChange}
         value={searchValue}
-        className='search'
-        placeholder='search'></input>
+        className="search"
+        placeholder="search"
+      ></input>
     </>
   )
 }
