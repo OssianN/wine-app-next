@@ -4,7 +4,7 @@ An application to keep track of your wine shelf.
 
 ## Hosted
 
-You can visit this application at [here](https://mywineshelf.vercel.app).
+You can visit this application [here](https://mywineshelf.vercel.app).
 
 ## Disclaimer
 
