@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 const Search = ({
   setSearchArr,
@@ -7,15 +7,19 @@ const Search = ({
   setSearchValue,
   showArchived,
 }) => {
-  const wines = useSelector(state => state.wineArr)
+  const wines = useSelector(state => state.wineArr);
 
-  const wineArr = showArchived
-    ? wines.filter(wine => wine.archived)
-    : wines.filter(wine => !wine.archived)
+  const wineArr = useMemo(
+    () =>
+      showArchived
+        ? wines.filter(wine => wine.archived)
+        : wines.filter(wine => !wine.archived),
+    [showArchived, wines]
+  );
 
   const handleChange = e => {
-    setSearchValue(e.target.value)
-  }
+    setSearchValue(e.target.value);
+  };
 
   const searchableValues = arr =>
     arr[0] === 'title' ||
@@ -24,9 +28,9 @@ const Search = ({
     arr[0] === 'price' ||
     arr[0] === 'rating'
       ? arr[1]
-      : ''
+      : '';
 
-  const searchNumber = string => parseInt(string.match(/[0-9]+/)?.[0])
+  const searchNumber = string => parseInt(string.match(/[0-9]+/)?.[0]);
 
   useEffect(() => {
     const handleSearch = () => {
@@ -36,35 +40,35 @@ const Search = ({
           .join('')
           .toLowerCase()
           .match(searchValue.toLowerCase())
-      )
-      setSearchArr(newArr)
-    }
-    handleSearch()
-  }, [searchValue, setSearchArr, wineArr, wines])
+      );
+      setSearchArr(newArr);
+    };
+    handleSearch();
+  }, [searchValue, setSearchArr, wineArr, wines]);
 
   useEffect(() => {
     const filterRating = () => {
       if (searchValue?.match(/rating/i)) {
         const ratingMatch = wineArr?.filter(
           wine => parseInt(wine.rating) >= searchNumber(searchValue)
-        )
-        setSearchArr(ratingMatch)
+        );
+        setSearchArr(ratingMatch);
       }
-    }
-    filterRating()
-  }, [searchValue, setSearchArr, wineArr, wines])
+    };
+    filterRating();
+  }, [searchValue, setSearchArr, wineArr, wines]);
 
   useEffect(() => {
     const filterPrice = () => {
       if (searchValue?.match(/kr/i)) {
         const numberMatch = wineArr?.filter(
           wine => parseInt(wine.price) <= searchNumber(searchValue)
-        )
-        setSearchArr(numberMatch)
+        );
+        setSearchArr(numberMatch);
       }
-    }
-    filterPrice()
-  }, [searchValue, setSearchArr, wineArr, wines])
+    };
+    filterPrice();
+  }, [searchValue, setSearchArr, wineArr, wines]);
 
   return (
     <>
@@ -76,7 +80,7 @@ const Search = ({
         placeholder="search"
       ></input>
     </>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

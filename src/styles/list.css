@@ -1,0 +1,40 @@
+.listViewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.listCardContainer {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  border: 1px solid red;
+  padding: 1rem;
+  padding-left: 0;
+  box-sizing: border-box;
+}
+
+.list-card__title {
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.list-card__img {
+  width: 6rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.list-card__content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.list-card__details {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

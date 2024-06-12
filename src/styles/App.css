@@ -69,12 +69,12 @@ button {
   z-index: 200;
   background-color: #ffffff;
   overflow: hidden;
-  animation: wineModal 1s;
+  animation: wineModal 0.3s;
 }
 
 @keyframes wineModal {
   from {
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
   to {
     transform: scale(1);

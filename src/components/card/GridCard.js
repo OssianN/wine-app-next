@@ -1,12 +1,12 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import wineSVG from './wine4.png'
-import { setPickedWine } from '../../actions/setPickedWine'
-import Image from 'next/image'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import wineSVG from './wine4.png';
+import { setPickedWine } from '../../actions/setPickedWine';
+import Image from 'next/image';
 
-const Card = ({ card, setShowEditModal, cardWidth }) => {
-  const dispatch = useDispatch()
-  const img = card.img ? `https:${card.img}` : wineSVG
+export const GridCard = ({ card, setShowEditModal, cardWidth }) => {
+  const dispatch = useDispatch();
+  const img = card.img ? `https:${card.img}` : wineSVG;
   const {
     _id,
     shelf,
@@ -18,18 +18,18 @@ const Card = ({ card, setShowEditModal, cardWidth }) => {
     price,
     rating,
     vivinoUrl,
-  } = card
+  } = card;
 
   const handleEdit = async () => {
-    dispatch(setPickedWine(card))
-    setShowEditModal({ display: 'flex' })
-  }
+    dispatch(setPickedWine(card));
+    setShowEditModal({ display: 'flex' });
+  };
 
-  const conditionalRender = element => element || '-'
+  const conditionalRender = element => element || '-';
 
   const conditionalRenderURL = element => {
     if (!element) {
-      return <a className="card__info-paragraph card__vivino-url"> - </a>
+      return <a className="card__info-paragraph card__vivino-url"> - </a>;
     }
     return (
       <a
@@ -40,15 +40,15 @@ const Card = ({ card, setShowEditModal, cardWidth }) => {
       >
         vivino &#x203A;
       </a>
-    )
-  }
+    );
+  };
 
   const limitTextLength = text => {
     if (text?.length > 12) {
-      return `${text.slice(0, 12)}...`
+      return `${text.slice(0, 12)}...`;
     }
-    return text
-  }
+    return text;
+  };
 
   return (
     <figure
@@ -63,13 +63,16 @@ const Card = ({ card, setShowEditModal, cardWidth }) => {
           &#8942;
         </button>
       </header>
+
       <div className="card__img">
         <Image alt="wine bottle" src={img} height={170} width={170} />
       </div>
+
       <div className="card__text-container">
         <h1 className="card__title">{title}</h1>
         <p className="card__country-paragraph">{conditionalRender(country)}</p>
         <p className="card__comment">{limitTextLength(comment)}</p>
+
         <footer className="card__footer">
           <span className="card__separaion-span"></span>
           <p className="card__info-paragraph">{conditionalRender(year)}</p>
@@ -81,7 +84,5 @@ const Card = ({ card, setShowEditModal, cardWidth }) => {
         </footer>
       </div>
     </figure>
-  )
-}
-
-export default Card
+  );
+};
